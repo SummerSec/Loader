@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>FORM</title>
+    <title>Loader 加载器 | Java加载器配套发送请求页面</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -14,79 +14,74 @@
 </head>
 
 <body>
-    <!-- <div class="layui-row"> -->
-        <!-- <div class="layui-col-xs3">
-            <div class="grid-demo"></div>
-        </div> -->
-        <!-- <div class="layui-col-xs6">
-            <div class="grid-demo"> -->
-                <div class="form">
-                    <h1>Loader 加载器</h1>
-                    <form class="layui-form" action="">
 
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">URL</label>
-                            <div class="layui-input-block">
-                                <input type="text" id="t" lay-verify="title" autocomplete="off" placeholder="请输入URL"
-                                    class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">选择框</label>
-                            <div class="layui-input-block">
-                                <select id="q" lay-verify="required">
-                                    <option value=""></option>
-                                    <option value="0">北京</option>
-                                    <option value="1">上海</option>
-                                    <option value="2">广州</option>
-                                    <option value="3">深圳</option>
-                                    <option value="4">杭州</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">搜索选择框</label>
-                            <div class="layui-input-inline">
-                                <select id="s" lay-verify="required" lay-search="">
-                                    <option value="">直接选择或搜索选择</option>
-                                    <option value="1">layer</option>
-                                    <option value="2">form</option>
-                                    <option value="3">layim</option>
-                                    <option value="4">element</option>
-                                    <option value="5">laytpl</option>
-                                    <option value="6">upload</option>
+    <div class="form">
+        <h1>Loader 加载器</h1>
+        <h2>Java加载器配套发送请求页面</h2>
+        <form class="layui-form" action="">
 
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="layui-form-item">
-                            <div class="layui-input-block">
-                                <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
-                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                            </div>
-                        </div>
-                    </form>
+            <div class="layui-form-item">
+                <label class="layui-form-label">URL</label>
+                <div class="layui-input-block">
+                    <input type="text" id="t" lay-verify="title" autocomplete="off" placeholder="请输入URL"
+                        class="layui-input">
                 </div>
             </div>
-        </div>
-        <!-- <div class="layui-col-xs3">
-            <div class="grid-demo"></div>
-        </div> -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">选择All</label>
+                <div class="layui-input-block">
+                    <select id="q" lay-verify="required">
+                        <option value=""></option>
+                        <option value="0">北京</option>
+                        <option value="1">上海</option>
+                        <option value="2">广州</option>
+                        <option value="3">深圳</option>
+                        <option value="4">杭州</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">搜索All</label>
+                <div class="layui-input-block">
+                    <select id="s" lay-verify="required" lay-search="">
+                        <option value="">直接选择或搜索选择</option>
+                        <option value="1">layer</option>
+                        <option value="2">form</option>
+                        <option value="3">layim</option>
+                        <option value="4">element</option>
+                        <option value="5">laytpl</option>
+                        <option value="6">upload</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
     </div>
 </body>
 
 <style>
     body {
         /* text-align: center */
-        justify-content: center;
-        align-items: center;
+        justify-content: center; 
+        align-items: center; 
     }
 
     .form {
-     
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
         width: 50%;
+        height: 50%;
         margin: auto;
+        
         /* background-color: mediumorchid; */
         /* margin-left: 25%; */
 
@@ -95,6 +90,13 @@
 
     h1 {
         font-size: 50px;
+        text-align: center;
+        /* size: 100px; */
+        /* size: a3; */
+        margin-bottom: 56px;
+    }
+    h2 {   
+        font-size: 3    0px;
         text-align: center;
         /* size: 100px; */
         /* size: a3; */
@@ -115,18 +117,20 @@
 <!-- 引入 jquery.js -->
 <script src="js/jquery.min.js">
 </script>
-
-
+<script src="js/t.js"></script>
+<script src="js/b.js"></script>
 <script>
 
     layui.use('form', function () {
         var form = layui.form;
 
         //监听提交
-        form.on('submit(demo1)', function (data) {
+        form.on('submit(demo2)', function (data) {
             var t = $('#t').val()
             var s = $('#s').val()
-            var q = $('#q ').val()
+            var q = $('#q').val()
+            
+            var ss ="saddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
             // layer.msg(JSON.stringify(data.field));
             layer.msg("success: " + t + " s: " + s + " q:" + q)
 
@@ -139,6 +143,7 @@
                     t: t,
                     q: q,
                     s: s,
+                    ss：ss,
                 },
 
                 success: function (data) {
