@@ -150,9 +150,12 @@
                     $.ajax({
                         url: url,
                         method: "POST",
-                        header: "Access-Control-Allow-Origin: *",
+                        // header: "Access-Control-Allow-Origin: *",
                         data: {
-                            data: data
+                            data
+                        },
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
                         },
                         success: function (datas) {
                             console.log("success: " + datas)
