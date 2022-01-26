@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-
+< meta http-equiv="Access-Control-Allow-Origin" content="*" >
 <head>
     <meta charset="utf-8">
     <title>Loader 加载器 | Java加载器配套发送请求页面</title>
@@ -149,6 +149,7 @@
                     $.ajax({
                         url: url,
                         method: "POST",
+                        header: "Access-Control-Allow-Origin: *",
                         data: {
                             data: data
                         },
