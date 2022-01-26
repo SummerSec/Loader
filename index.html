@@ -21,29 +21,17 @@
         <form class="layui-form" action="">
 
             <div class="layui-form-item">
-                <label class="layui-form-label" lay-verify="required" >URL</label>
+                <label class="layui-form-label"  >URL</label>
                 <div class="layui-input-block">
-                    <input type="text" id="t" lay-verify="title" autocomplete="off" placeholder="请输入URL"
+                    <input type="text" id="url" lay-verify="title" autocomplete="off" placeholder="请输入URL"
                         class="layui-input">
                 </div>
             </div>
-            <!-- <div class="layui-form-item">
-                <label class="layui-form-label">选择库文件</label>
-                <div class="layui-input-block">
-                    <select id="q" >
-                        <option value=""></option>
-                        <option value="0">Calc</option>
-                        <option value="1">上海</option>
-                        <option value="2">广州</option>
-                        <option value="3">深圳</option>
-                        <option value="4">杭州</option>
-                    </select>
-                </div>
-            </div> -->
+
             <div class="layui-form-item">
                 <label class="layui-form-label">选择库文件</label>
                 <div class="layui-input-block">
-                    <select id="s" lay-verify="required" lay-search="">
+                    <select id="res" lay-verify="required" lay-search="">
                         <option value="">直接选择或搜索选择</option>
                         <option value="1">Calc</option>
                         <option value="2">form</option>
@@ -117,33 +105,48 @@
 <!-- 引入 jquery.js -->
 <script src="js/jquery.min.js">
 </script>
-<script src="js/t.js"></script>
-<script src="js/b.js"></script>
+<!-- <script src="js/t.js"></script> -->
+<script src="js/file-func.js"></script>
+
 <script>
 
     layui.use('form', function () {
         var form = layui.form;
-
         //监听提交
-        form.on('submit(demo2)', function (data) {
-            var t = $('#t').val()
-            var s = $('#s').val()
-            var q = $('#q').val()
+        form.on('submit(demo1)', function (data) {
+            var url = $('#url').val()
+            var res = $('#res').val()
+            var baseURL = '';
+            if(res == "1"){
+                baseURL = "./res/calcbase64.txt"
+                ts(baseURL)
+            }else if(res == "2"){
+                baseURL = "./res/formbase64.txt"
+                ts(baseURL)
             
-            var ss ="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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY2FsYy5leGUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAA0AAAACjAQMCowMjA4MEMwUDBYMGYwazBwMHUwgDCNMJcwrDC4ML4w4DDyME4xajEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-            // layer.msg(JSON.stringify(data.field));
-            layer.msg("success: " + t + " s: " + s + " q:" + q)
+            }else if(res == "3"){
+                baseURL = "./res/layimbase64.txt"
+                ts(baseURL)
+            }else if(res == "4"){
+                baseURL = "./res/elementbase64.txt"
+                ts(baseURL)
+            }else if(res == "5"){
+                baseURL = "./res/laytplbase64.txt"
+                ts(baseURL)
+            }else if(res == "6"){
+                baseURL = "./res/uploadbase64.txt"
+                ts(baseURL)
+            }
+
+            layer.msg("success: " + url + " res: " + res)
 
 
             $.ajax({
-                url: "/DeleteCardMachine",
-                method: "GET",
+                // url: "/DeleteCardMachine",
+                // method: "GET",
                 // dataType: "json",
                 data: {
-                    t: t,
-                    q: q,
-                    s: s,
-                    ss: ss,
+                    baseURL
                 },
 
                 success: function (data) {
@@ -158,5 +161,14 @@
         });
     });
 </script>
-
+<script language="javascript"> 
+    var res;
+    function ts(src){
+        console.log(src);
+         res =  addScriptTag(src);
+         foo(res);
+        console.log(res);
+    }
+    
+</script> 
 </html>
