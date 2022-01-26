@@ -117,32 +117,25 @@
             var url = $('#url').val()
             var res = $('#res').val()
             var baseURL = '';
-            // if(res == "1"){
-            //     baseURL = "/GitHubProject/Loader/res/calcbase64.txt"
-            //     ts(baseURL)
-            // }else if(res == "2"){
-            //     baseURL = "./res/formbase64.txt"
-            //     ts(baseURL)
-            
-            // }else if(res == "3"){
-            //     baseURL = "./res/layimbase64.txt"
-            //     ts(baseURL)
-            // }else if(res == "4"){
-            //     baseURL = "./res/elementbase64.txt"
-            //     ts(baseURL)
-            // }else if(res == "5"){
-            //     baseURL = "./res/laytplbase64.txt"
-            //     ts(baseURL)
-            // }else if(res == "6"){
-            //     baseURL = "./res/uploadbase64.txt"
-            //     ts(baseURL)
-            // }
-
+            if(res == "1"){
+                baseURL = "/res/calcbase64.txt"
+            }else if(res == "2"){
+                baseURL = "/res/formbase64.txt"
+            }else if(res == "3"){
+                baseURL = "/res/layimbase64.txt"
+            }else if(res == "4"){
+                baseURL = "/res/elementbase64.txt"
+            }else if(res == "5"){
+                baseURL = "/res/laytplbase64.txt"
+            }else if(res == "6"){
+                baseURL = "/res/uploadbase64.txt"
+            }
             layer.msg("success: " + url + " res: " + res)
 
-            var urs = document.URL.split("/index.html")[0]
-            console.log("==="+urs)
-            urs += "/res/" + "calcbase64.txt"
+            var urs = document.URL.split("/index.html")[0] + baseURL;
+            console.log("urs"+urs)
+            // urs += "/res/" + "calcbase64.txt"
+            // urs = "https://loader.sumsec.me/res/calcbase64.txt"
             $.ajax({
                 url: urs,
                 method: "GET",
@@ -152,8 +145,25 @@
                 // },
 
                 success: function (data) {
-                    console.log("12: "+data)
+                    console.log("datas: "+data)
+                    $.ajax({
+                        url: url,
+                        method: "POST",
+                        data: {
+                            data: data
+                        },
+                        success: function (datas) {
+                            console.log("success: " + datas)
+                            layer.msg("success: " + datas)
+                        },
+                        error: function (datas) {
+                            console.log("error: " + datas)
+                            layer.msg("error: " + datas)
+                        }
+                    })
                 },
+
+
                 error: function () {
                     console.log("error");
                 },
@@ -163,14 +173,4 @@
         });
     });
 </script>
-<script language="javascript"> 
-    var res;
-    function ts(src){
-        console.log(src);
-         res =  addScriptTag(src);
-         foo(res);
-        console.log(res);
-    }
-    
-</script> 
 </html>
