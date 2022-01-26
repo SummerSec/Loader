@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" >
+
+    <title>Loader 加载器 | Java加载器配套发送请求页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- 引入 layui.css -->
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <!-- <link rel="stylesheet" href="https://layui.11dz.cn/layui-v2.6.8/layui/css/layui.css"> -->
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+
+<body>
+
+    <div class="form">
+        <h1>Loader 加载器</h1>
+        <h2>Java加载器配套发送请求页面</h2>
+        <form class="layui-form" action="">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label"  >URL</label>
+                <div class="layui-input-block">
+                    <input type="text" id="url" lay-verify="title" autocomplete="off" placeholder="请输入URL"
+                        class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">选择库文件</label>
+                <div class="layui-input-block">
+                    <select id="res" lay-verify="required" lay-search="">
+                        <option value="">直接选择或搜索选择</option>
+                        <option value="1">Calc</option>
+                        <option value="2">form</option>
+                        <option value="3">layim</option>
+                        <option value="4">element</option>
+                        <option value="5">laytpl</option>
+                        <option value="6">upload</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="submit"  class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+<style>
+    body {
+        /* text-align: center */
+        justify-content: center; 
+        align-items: center; 
+    }
+
+    .form {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 50%;
+        height: 50%;
+        margin: auto;
+        
+        /* background-color: mediumorchid; */
+        /* margin-left: 25%; */
+
+        font-size: 16px;
+    }
+
+    h1 {
+        font-size: 50px;
+        text-align: center;
+        /* size: 100px; */
+        /* size: a3; */
+        margin-bottom: 56px;
+    }
+    h2 {   
+        font-size: 3    0px;
+        text-align: center;
+        /* size: 100px; */
+        /* size: a3; */
+        margin-bottom: 56px;
+    }
+
+    .layui-input-block {
+        margin-left: 110px;
+        min-height: 36px;
+        margin-top: 10px;
+    }
+</style>
+
+
+<!-- 引入 layui.js -->
+<script src="https://layui.11dz.cn/layui-v2.6.8/layui/layui.js">
+</script>
+<!-- 引入 jquery.js -->
+<script src="js/jquery.min.js">
+</script>
+<!-- <script src="js/t.js"></script> -->
+<script src="js/file-func.js"></script>
+
+<script>
+
+    layui.use('form', function () {
+        var form = layui.form;
+        //监听提交
+        form.on('submit(demo1)', function (data) {
+            var url = $('#url').val()
+            var res = $('#res').val()
+            var baseURL = '';
+            if(res == "1"){
+                baseURL = "res/calcbase64.txt"
+            }else if(res == "2"){
+                baseURL = "res/formbase64.txt"
+            }else if(res == "3"){
+                baseURL = "res/layimbase64.txt"
+            }else if(res == "4"){
+                baseURL = "res/elementbase64.txt"
+            }else if(res == "5"){
+                baseURL = "res/laytplbase64.txt"
+            }else if(res == "6"){
+                baseURL = "res/uploadbase64.txt"
+            }
+            layer.msg("success: " + url + " res: " + res)
+
+            var urs = document.URL.split("/index.html")[0] + baseURL;
+            console.log("urs"+urs)
+            // urs += "/res/" + "calcbase64.txt"
+            // urs = "https://loader.sumsec.me/res/calcbase64.txt"
+            $.ajax({
+                url: urs,
+                method: "GET",
+                // dataType: "json",
+                // data: {
+                //     baseURL
+                // },
+
+                success: function (data) {
+                    console.log("datas: "+data)
+                    // window.location.href = url + "?res=" data+ 
+                    $.ajax({
+                        url: url,
+                        method: "POST",
+
+                        // header: "Access-Control-Allow-Origin: *",
+                        data: {
+                            data
+                        },
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+                        },
+                        success: function (datas) {
+                            console.log("success: " + datas)
+                            layer.msg("success: " + datas)
+                        },
+                        error: function (datas) {
+                            console.log("error: " + datas)
+                            layer.msg("error: " + datas)
+                        }
+                    })
+                },
+
+
+                error: function () {
+                    console.log("error");
+                },
+
+            });
+            return false;
+        });
+    });
+</script>
+</html>
