@@ -48,7 +48,7 @@ async   function addScriptTag(src) {
 }
 
 async   function foo(data) {
-    console.log(JSON.stringify(data));
+    console.log("======"+JSON.stringify(data));
 }
 
 
